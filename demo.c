@@ -1,7 +1,7 @@
 #include "printTitle.h"
 
 int main(){
-    char *x = "xyz";
+    char *x = "shit";
     printTitle(x, x, '@');
 
     return 0;
