@@ -9,6 +9,7 @@
 static void printChar(char ch){printf("%c", ch);}
 static void newLine(){printf("\n");}
 
+static char *words;
 static char litters[26][6][9] = {
     { // A
         {0,1,1,1,1,1,1,1,0},
@@ -220,26 +221,44 @@ static char litters[26][6][9] = {
     },
 };
 
-static void drawLitter(char litter, char block){
-    int i, j;
+static void drawLitter(char litter, int length, int count){
+    int i, j, k;
     
     for (i = 0;i < 6;i++) {
-        for (j = 0;j < 9;j++) {
-            if (litters[litter][i][j])
+        k = 0;
+        for (j = (count * 9);j < length;j++) {
+            *(words + (i * length) + j) = litters[litter][i][k];
+            k = k + 1;
+        }
+    }
+
+    // add space between littres    
+    // for (i = 0;i < 6;i++) {
+    //     for (j = 0;j < 9;j++) {
+            
+    //     }
+    // }
+}
+
+void printTitle(char *text, char *decoration, char block){
+    int i, j;
+
+    // set words array size
+    words = (char *) malloc(6 * (strlen(text)*9) * sizeof(char));
+
+    // add the litters to words array!
+    for (i = 0;i < strlen(text);i++) {
+        drawLitter((char)(text[i] - 97), (strlen(text)*9), i);
+    }
+
+    // print words array
+    for (i = 0;i < 6;i++) {
+        for (j = 0;j < (strlen(text)*9);j++) {
+            if (*(words + (i * (strlen(text)*9)) + j))
                 printChar(block);
             else
                 printChar(' ');
         }
-        
-        newLine();
-    }
-}
-
-void printTitle(char *text, char *decoration, char block){
-    int i;
-
-    for (i = 0;i < strlen(text);i++) {
-        drawLitter((char)(text[i] - 97), block);
         newLine();
     }
 
