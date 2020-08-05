@@ -235,17 +235,41 @@ static void drawLitter(char litter, int length, int count){
     }
 }
 
-void printTitle(char *text, char *decoration, char block){
+/**
+ * Draw litters on the screen.
+ *
+ * @param string text
+ * @param char   block
+ * @param char   decoration
+ *
+ * @return void
+ */
+void printTitle(char *text, char block, char decoration){
     int i, j, cols;
+    char litter;
 
-    cols = strlen(text) * col_num;
-
+    // check that the text is not empty
+    if (!strlen(text)) {
+        return;
+    }
+     
     // set words array size
+    cols = strlen(text) * col_num;
     words = (char *) malloc(row_num * cols * sizeof(char));
 
     // add the litters to words array!
     for (i = 0;i < strlen(text);i++) {
-        drawLitter((char)(text[i] - 97), cols, i);
+        if ((text[i] - 65) >= 0 && (text[i] - 65) < 26) {
+            litter = text[i] - 65;
+        }
+        else if ((text[i] - 97) >= 0 && (text[i] - 97) < 26) {
+            litter = text[i] - 97;
+        }
+        else {
+            return;
+        }
+
+        drawLitter(litter, cols, i);
     }
 
     // print words array
@@ -259,5 +283,11 @@ void printTitle(char *text, char *decoration, char block){
         newLine();
     }
 
-    newLine();
+    // add underline
+    if (decoration == 'u') {
+        for (j = 0;j < cols-1;j++) {
+            printChar(block);
+        }
+        newLine();
+    }
 }

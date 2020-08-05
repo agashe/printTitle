@@ -14,9 +14,9 @@
  * Draw litters on the screen.
  *
  * @param string text
- * @param string decoration
  * @param char   block
+ * @param char   decoration
  *
  * @return void
  */
-void printTitle(char *text, char *decoration, char block);
+void printTitle(char *text, char block, char decoration);
